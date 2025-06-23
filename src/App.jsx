@@ -76,6 +76,14 @@ const App = () => {
 
   return (
     <div className="p-8">
+      {/* Create header contain 2 logo right - left, between is text: Microservice with Spring Cloud */}
+            <div className="border border-gray-300 p-4 rounded-md mb-6">
+              <div className="flex justify-between items-center">
+                <img src="image/logo-team.png" alt="Logo" className="h-13" />
+                <div className="text-[30px] font-bold">Microservice with Spring Cloud</div>
+                <img src="image/logo-lg.svg" alt="Right Logo" className="h-10" />
+              </div>
+            </div>
       <h1 className="text-2xl font-bold mb-4">Configuration Management</h1>
       <Button
         type="primary"
