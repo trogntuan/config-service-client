@@ -1,10 +1,10 @@
 // API Configuration
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL,
   ENDPOINTS: {
-    CONFIGS: '/api/configs',
+    CONFIGS: '/configs',
   },
-  TIMEOUT: 10000, // 10 seconds
+  TIMEOUT: 30000,
 };
 
 // Helper function to get full API URL
