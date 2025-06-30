@@ -1,70 +1,189 @@
-# Getting Started with Create React App
+# Configuration Management Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React-based frontend application for managing application configurations and properties. This application provides a user-friendly interface to interact with a Spring Boot configuration service API.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- 📊 **Dashboard Statistics**: View total configurations, applications, and profiles at a glance
+- 🔍 **Advanced Search**: Search configurations by application name, property key, or value
+- 🏷️ **Filtering**: Filter by application and profile
+- ➕ **CRUD Operations**: Create, read, update, and delete configurations
+- 📱 **Responsive Design**: Works on desktop and mobile devices
+- 🎨 **Modern UI**: Built with Ant Design and Tailwind CSS
 
-### `yarn start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js (version 16 or higher)
+- Yarn or npm
+- Spring Boot backend service running (see API Configuration below)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `yarn test`
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd config-service-client
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies:
+```bash
+yarn install
+# or
+npm install
+```
 
-### `yarn build`
+3. Configure the API endpoint (see Configuration section below)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Start the development server:
+```bash
+yarn dev
+# or
+npm run dev
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The application will be available at `http://localhost:5173`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Configuration
 
-### `yarn eject`
+### API Configuration
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The application connects to a Spring Boot backend service. Update the API configuration in `src/config/api.js`:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```javascript
+export const API_CONFIG = {
+  BASE_URL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080',
+  ENDPOINTS: {
+    CONFIGS: '/api/configs',
+  },
+  TIMEOUT: 10000,
+};
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Environment Variables
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Create a `.env` file in the root directory to override default settings:
 
-## Learn More
+```env
+REACT_APP_API_BASE_URL=http://localhost:8080
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## API Integration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The application integrates with the following Spring Boot API endpoints:
 
-### Code Splitting
+### Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- `GET /api/configs` - Get all configurations
+- `GET /api/configs/{id}` - Get configuration by ID
+- `POST /api/configs` - Create new configuration
+- `PUT /api/configs/{id}` - Update configuration
+- `DELETE /api/configs/{id}` - Delete configuration
 
-### Analyzing the Bundle Size
+### Data Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The application expects the following data structure from the API:
 
-### Making a Progressive Web App
+```json
+{
+  "id": 1,
+  "application": "user-service",
+  "profile": "default",
+  "label": "User Service Config",
+  "propertyKey": "database.url",
+  "propertyValue": "jdbc:mysql://localhost:3306/users"
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Usage
 
-### Advanced Configuration
+### Adding a Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Click the "Add Configuration" button
+2. Fill in the required fields:
+   - **Application**: The name of your application (e.g., "user-service")
+   - **Profile**: Select from default, dev, test, or prod
+   - **Property Key**: The configuration key (e.g., "database.url")
+   - **Property Value**: The configuration value
+3. Click "Create Configuration"
 
-### Deployment
+### Editing a Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. Click the "Edit" button next to any configuration
+2. Modify the values as needed
+3. Click "Update Configuration"
 
-### `yarn build` fails to minify
+### Deleting a Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Click the "Delete" button next to any configuration
+2. Confirm the deletion in the popup dialog
+
+### Searching and Filtering
+
+- Use the search box to find configurations by application name, property key, or value
+- Use the dropdown filters to filter by specific application or profile
+- Click "Clear Filters" to reset all filters
+
+## Project Structure
+
+```
+src/
+├── App.jsx                 # Main application component
+├── config/
+│   └── api.js             # API configuration
+├── services/
+│   └── configService.js   # API service layer
+├── index.jsx              # Application entry point
+└── index.css              # Global styles
+```
+
+## Technologies Used
+
+- **React 18** - Frontend framework
+- **Ant Design** - UI component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Axios** - HTTP client for API calls
+- **Vite** - Build tool and development server
+
+## Development
+
+### Available Scripts
+
+- `yarn dev` - Start development server
+- `yarn build` - Build for production
+- `yarn preview` - Preview production build
+
+### Code Style
+
+The project uses:
+- ESLint for code linting
+- Prettier for code formatting
+- Tailwind CSS for styling
+
+## Troubleshooting
+
+### Common Issues
+
+1. **API Connection Error**
+   - Ensure the Spring Boot backend is running
+   - Check the API base URL in `src/config/api.js`
+   - Verify CORS configuration on the backend
+
+2. **Build Errors**
+   - Clear node_modules and reinstall dependencies
+   - Check for version conflicts in package.json
+
+3. **Styling Issues**
+   - Ensure Tailwind CSS is properly configured
+   - Check that Ant Design styles are imported
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
